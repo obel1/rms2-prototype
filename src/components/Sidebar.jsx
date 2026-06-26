@@ -22,10 +22,11 @@ const sectionItems = {
   ],
 };
 
-function NavItem({ to, children, icon }) {
+function NavItem({ to, children, icon, onNavigate }) {
   return (
     <NavLink
       to={to}
+      onClick={onNavigate}
       className={({ isActive }) =>
         [
           "flex items-center gap-3 px-3 py-2 rounded-md text-sm",
@@ -44,7 +45,7 @@ function NavItem({ to, children, icon }) {
   );
 }
 
-function Disclosure({ title, items, defaultOpen = false }) {
+function Disclosure({ title, items, defaultOpen = false, onNavigate }) {
   const [open, setOpen] = useState(defaultOpen);
   const navigate = useNavigate();
   return (
@@ -63,7 +64,10 @@ function Disclosure({ title, items, defaultOpen = false }) {
           {items.map((it) => (
             <button
               key={it.to}
-              onClick={() => navigate(it.to)}
+              onClick={() => {
+                navigate(it.to);
+                onNavigate?.();
+              }}
               className="w-full text-left px-3 py-1.5 text-sm rounded-md text-navy-100 hover:bg-navy-700"
             >
               {it.label}
@@ -75,59 +79,98 @@ function Disclosure({ title, items, defaultOpen = false }) {
   );
 }
 
-export default function Sidebar() {
+export default function Sidebar({ open = false, onClose }) {
   return (
-    <aside className="w-64 shrink-0 bg-navy-800 text-white flex flex-col h-full">
-      <div className="px-5 py-5 border-b border-navy-700">
-        <div className="text-[10px] uppercase tracking-[0.18em] text-navy-200">
-          ISRA Institute · RMC
-        </div>
-        <div className="mt-1 text-lg font-semibold leading-tight">
-          RMS <span className="text-brand-100">2.0</span>
-        </div>
-      </div>
+    <>
+      {/* Backdrop — mobile only */}
+      <div
+        onClick={onClose}
+        className={[
+          "fixed inset-0 bg-navy-900/50 z-30 lg:hidden transition-opacity",
+          open ? "opacity-100" : "opacity-0 pointer-events-none",
+        ].join(" ")}
+        aria-hidden={!open}
+      />
 
-      <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-1">
-        <NavItem to="/" icon="●">
-          Dashboard
-        </NavItem>
-        <NavItem to="/requests" icon="◉">
-          Request Submission
-        </NavItem>
-        <NavItem to="/projects" icon="◧">
-          Projects
-        </NavItem>
-
-        <div className="pt-4">
-          <div className="px-3 pb-1 text-[10px] uppercase tracking-wider text-navy-200">
-            Submit a request
+      <aside
+        className={[
+          "w-64 shrink-0 bg-navy-800 text-white flex flex-col",
+          // Mobile: fixed slide-in drawer
+          "fixed inset-y-0 left-0 z-40 transition-transform duration-200",
+          open ? "translate-x-0" : "-translate-x-full",
+          // Desktop: static column, always visible
+          "lg:static lg:translate-x-0 lg:z-auto lg:h-full",
+        ].join(" ")}
+      >
+        <div className="px-5 py-5 border-b border-navy-700 flex items-center justify-between">
+          <div>
+            <div className="text-[10px] uppercase tracking-[0.18em] text-navy-200">
+              ISRA Institute · RMC
+            </div>
+            <div className="mt-1 text-lg font-semibold leading-tight">
+              RMS <span className="text-brand-100">2.0</span>
+            </div>
           </div>
-          <div className="space-y-1">
-            <Disclosure title="Registration" items={sectionItems.Registration} />
-            <Disclosure
-              title="Research"
-              items={sectionItems.Research}
-              defaultOpen
-            />
-            <Disclosure title="Financial" items={sectionItems.Financial} />
-          </div>
+          <button
+            onClick={onClose}
+            className="lg:hidden text-navy-200 hover:text-white text-2xl leading-none px-2"
+            aria-label="Close menu"
+          >
+            ×
+          </button>
         </div>
 
-        <div className="pt-4">
-          <div className="px-3 pb-1 text-[10px] uppercase tracking-wider text-navy-200">
-            Administration
-          </div>
-          <NavItem to="/admin/positions" icon="⚙">
-            Position Registry
+        <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-1">
+          <NavItem to="/" icon="●" onNavigate={onClose}>
+            Dashboard
           </NavItem>
-        </div>
-      </nav>
+          <NavItem to="/requests" icon="◉" onNavigate={onClose}>
+            Request Submission
+          </NavItem>
+          <NavItem to="/projects" icon="◧" onNavigate={onClose}>
+            Projects
+          </NavItem>
 
-      <div className="px-5 py-4 border-t border-navy-700 text-xs text-navy-200">
-        Signed in as
-        <div className="text-white text-sm font-medium">Iman Ruzain</div>
-        <div className="text-[11px]">RMC Executive</div>
-      </div>
-    </aside>
+          <div className="pt-4">
+            <div className="px-3 pb-1 text-[10px] uppercase tracking-wider text-navy-200">
+              Submit a request
+            </div>
+            <div className="space-y-1">
+              <Disclosure
+                title="Registration"
+                items={sectionItems.Registration}
+                onNavigate={onClose}
+              />
+              <Disclosure
+                title="Research"
+                items={sectionItems.Research}
+                defaultOpen
+                onNavigate={onClose}
+              />
+              <Disclosure
+                title="Financial"
+                items={sectionItems.Financial}
+                onNavigate={onClose}
+              />
+            </div>
+          </div>
+
+          <div className="pt-4">
+            <div className="px-3 pb-1 text-[10px] uppercase tracking-wider text-navy-200">
+              Administration
+            </div>
+            <NavItem to="/admin/positions" icon="⚙" onNavigate={onClose}>
+              Position Registry
+            </NavItem>
+          </div>
+        </nav>
+
+        <div className="px-5 py-4 border-t border-navy-700 text-xs text-navy-200">
+          Signed in as
+          <div className="text-white text-sm font-medium">Iman Ruzain</div>
+          <div className="text-[11px]">RMC Executive</div>
+        </div>
+      </aside>
+    </>
   );
 }

@@ -15,7 +15,7 @@ export default function Projects() {
         }
       />
 
-      <div className="px-8 pb-8">
+      <div className="px-4 sm:px-6 lg:px-8 pb-8">
         <Card>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">

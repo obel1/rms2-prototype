@@ -117,7 +117,7 @@ export default function ApprovalRoutingPanel({
   footer,
 }) {
   return (
-    <aside className="bg-white border border-line rounded-xl shadow-[0_1px_2px_rgba(15,23,42,0.04)] sticky top-4">
+    <aside className="bg-white border border-line rounded-xl shadow-[0_1px_2px_rgba(15,23,42,0.04)] lg:sticky lg:top-4">
       <div className="px-5 pt-4 pb-3 border-b border-line">
         <div className="flex items-center gap-2">
           <span className="text-[10px] uppercase tracking-wider text-brand-600 font-semibold px-2 py-0.5 rounded-full border border-brand-100 bg-brand-50">

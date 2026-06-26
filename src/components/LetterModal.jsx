@@ -72,17 +72,17 @@ export default function LetterModal({ open, onClose, letter }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-stretch justify-center bg-navy-900/50 backdrop-blur-sm">
-      <div className="m-6 my-8 w-full max-w-3xl bg-white rounded-xl shadow-2xl flex flex-col max-h-[calc(100vh-4rem)]">
-        <div className="px-6 py-4 border-b border-line flex items-center justify-between">
-          <div>
+      <div className="m-3 sm:m-6 sm:my-8 w-full max-w-3xl bg-white rounded-xl shadow-2xl flex flex-col max-h-[calc(100vh-1.5rem)] sm:max-h-[calc(100vh-4rem)]">
+        <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-line flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+          <div className="min-w-0 flex-1">
             <div className="text-[10px] uppercase tracking-wider text-brand-600 font-semibold">
               {letter.type} · auto-generated
             </div>
-            <div className="text-base font-semibold text-navy-900 mt-0.5">
+            <div className="text-base font-semibold text-navy-900 mt-0.5 truncate">
               {preset.title}
             </div>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <button className="text-xs px-3 py-1.5 rounded-md border border-line bg-white hover:bg-surface text-navy-700">
               Download PDF
             </button>
@@ -99,9 +99,9 @@ export default function LetterModal({ open, onClose, letter }) {
           </div>
         </div>
 
-        <div className="px-10 py-8 overflow-y-auto text-sm text-navy-900 font-serif leading-relaxed">
+        <div className="px-5 sm:px-10 py-6 sm:py-8 overflow-y-auto text-sm text-navy-900 font-serif leading-relaxed">
           {/* Letterhead */}
-          <div className="flex items-start justify-between border-b border-line pb-4 mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 border-b border-line pb-4 mb-6">
             <div>
               <div className="text-[10px] uppercase tracking-[0.18em] text-navy-500">
                 Confidential
@@ -113,7 +113,7 @@ export default function LetterModal({ open, onClose, letter }) {
                 Research Management Centre (RMC)
               </div>
             </div>
-            <div className="text-right text-xs text-navy-500">
+            <div className="sm:text-right text-xs text-navy-500">
               <div>
                 Ref:{" "}
                 <span className="text-navy-900 font-medium">

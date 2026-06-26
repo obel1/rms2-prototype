@@ -30,7 +30,7 @@ export default function PositionRegistry() {
         subtitle="Institutional office-holders only. Project roles (PI, Co-Researcher, RA, SME, Project Lead) are managed on each project."
       />
 
-      <div className="px-8 pb-8 space-y-6">
+      <div className="px-4 sm:px-6 lg:px-8 pb-8 space-y-6">
         <div className="border border-brand-100 bg-brand-50/60 rounded-xl px-5 py-4">
           <div className="text-sm font-semibold text-brand-700">
             This registry holds institutional offices only.

@@ -4,7 +4,7 @@ export default function Placeholder({ title, screenNumber }) {
   return (
     <div>
       <PageHeader title={title} subtitle="Coming next in the prototype build" />
-      <div className="px-8 pb-8">
+      <div className="px-4 sm:px-6 lg:px-8 pb-8">
         <Card className="px-6 py-10 text-center">
           <div className="text-xs uppercase tracking-wider text-brand-600 font-semibold">
             Screen {screenNumber}

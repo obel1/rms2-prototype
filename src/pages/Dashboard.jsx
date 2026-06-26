@@ -41,9 +41,9 @@ export default function Dashboard() {
         }
       />
 
-      <div className="px-8 pb-8 space-y-6">
+      <div className="px-4 sm:px-6 lg:px-8 pb-8 space-y-6">
         {/* Stat row */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <StatCard
             label="Active Projects"
             value={active}
@@ -125,23 +125,23 @@ export default function Dashboard() {
                 <li key={p.id}>
                   <Link
                     to={`/projects/${p.id}`}
-                    className="grid grid-cols-12 gap-3 items-center px-5 py-3.5 hover:bg-surface text-sm"
+                    className="flex flex-col gap-2 sm:grid sm:grid-cols-12 sm:gap-3 sm:items-center px-5 py-3.5 hover:bg-surface text-sm"
                   >
-                    <div className="col-span-5">
-                      <div className="font-medium text-navy-900 truncate">
+                    <div className="sm:col-span-5 min-w-0">
+                      <div className="font-medium text-navy-900 sm:truncate">
                         {p.title}
                       </div>
                       <div className="text-xs text-navy-500 mt-0.5">
                         {p.id} · {p.coe} · {p.pi}
                       </div>
                     </div>
-                    <div className="col-span-3 text-xs text-navy-500">
+                    <div className="sm:col-span-3 text-xs text-navy-500 min-w-0">
                       <div>
                         {fmtRM(p.disbursed)}{" "}
                         <span className="text-navy-200">/</span>{" "}
                         {fmtRM(p.allocation)}
                       </div>
-                      <div className="mt-1 max-w-[140px]">
+                      <div className="mt-1 max-w-[180px]">
                         <ProgressBar
                           value={p.utilisation}
                           tone={
@@ -154,13 +154,13 @@ export default function Dashboard() {
                         />
                       </div>
                     </div>
-                    <div className="col-span-2 text-xs text-navy-500">
+                    <div className="sm:col-span-2 text-xs text-navy-500">
                       Ends{" "}
                       <span className="text-navy-900 font-medium">
                         {p.endDate}
                       </span>
                     </div>
-                    <div className="col-span-2 flex justify-end">
+                    <div className="sm:col-span-2 sm:flex sm:justify-end">
                       <StatusPill status={p.status} />
                     </div>
                   </Link>

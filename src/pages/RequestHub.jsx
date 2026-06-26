@@ -62,7 +62,7 @@ function ModuleDropdown({ label, items, openName, setOpenName }) {
         </span>
       </button>
       {open && (
-        <div className="absolute left-0 mt-2 w-72 bg-white border border-line rounded-lg shadow-lg z-20 overflow-hidden">
+        <div className="absolute left-0 mt-2 w-[calc(100vw-2rem)] max-w-xs sm:w-72 bg-white border border-line rounded-lg shadow-lg z-20 overflow-hidden">
           <div className="px-4 py-2 text-[10px] uppercase tracking-wider text-navy-500 border-b border-line bg-surface">
             {label} forms
           </div>
@@ -112,7 +112,7 @@ export default function RequestHub() {
         subtitle="Start a new request from one of the three modules below, or track requests you've already submitted."
       />
 
-      <div className="px-8 pb-8 space-y-6">
+      <div className="px-4 sm:px-6 lg:px-8 pb-8 space-y-6">
         {/* Module launcher */}
         <Card className="px-5 py-5">
           <div className="text-xs uppercase tracking-wider text-navy-500 font-semibold mb-3">
@@ -146,7 +146,7 @@ export default function RequestHub() {
 
         {/* Requests table */}
         <Card>
-          <div className="flex items-center justify-between gap-4 px-5 pt-4 pb-3 border-b border-line">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-4 px-5 pt-4 pb-3 border-b border-line">
             <div>
               <div className="text-sm font-semibold text-navy-900">
                 Submitted Requests
@@ -155,20 +155,20 @@ export default function RequestHub() {
                 {filtered.length} of {submittedRequests.length} requests
               </div>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2">
               <input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search ID, project, type…"
-                className="text-sm px-3 py-1.5 rounded-md border border-line bg-white focus:outline-none focus:border-brand-500 w-56"
+                className="text-sm px-3 py-1.5 rounded-md border border-line bg-white focus:outline-none focus:border-brand-500 w-full sm:w-56"
               />
-              <div className="inline-flex rounded-md border border-line bg-white overflow-hidden text-xs">
+              <div className="inline-flex rounded-md border border-line bg-white overflow-hidden text-xs self-start sm:self-auto">
                 {["All", "Registration", "Research", "Financial"].map((m) => (
                   <button
                     key={m}
                     onClick={() => setFilter(m)}
                     className={[
-                      "px-3 py-1.5 border-l first:border-l-0 border-line",
+                      "px-3 py-1.5 border-l first:border-l-0 border-line whitespace-nowrap",
                       filter === m
                         ? "bg-brand-600 text-white border-brand-600"
                         : "text-navy-700 hover:bg-surface",

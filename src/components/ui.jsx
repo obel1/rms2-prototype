@@ -27,16 +27,16 @@ export function CardHeader({ title, subtitle, action }) {
 
 export function PageHeader({ title, subtitle, actions }) {
   return (
-    <div className="px-8 pt-7 pb-5 flex items-end justify-between gap-6">
-      <div>
-        <div className="text-2xl font-semibold tracking-tight text-navy-900">
+    <div className="px-4 sm:px-6 lg:px-8 pt-5 sm:pt-7 pb-4 sm:pb-5 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 sm:gap-6">
+      <div className="min-w-0">
+        <div className="text-xl sm:text-2xl font-semibold tracking-tight text-navy-900">
           {title}
         </div>
         {subtitle && (
           <div className="text-sm text-navy-500 mt-1">{subtitle}</div>
         )}
       </div>
-      {actions && <div className="flex gap-2">{actions}</div>}
+      {actions && <div className="flex flex-wrap gap-2">{actions}</div>}
     </div>
   );
 }
