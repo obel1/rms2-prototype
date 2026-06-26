@@ -1,3 +1,8 @@
+// Position Registry holds INSTITUTIONAL OFFICES only — singular posts that
+// resolve to one current holder at any time. Project roles (PI, Co-Researcher,
+// RA, SME, Project Lead) are NOT positions: they are held per-project and live
+// on the project's team list.
+
 export const positions = [
   {
     id: "POS-DIR-RMC",
@@ -28,12 +33,6 @@ export const positions = [
     title: "Deputy President, Research",
     holder: "Dr Marjan Muhammad",
     effectiveFrom: "2024-09-01",
-  },
-  {
-    id: "POS-PI",
-    title: "Principal Researcher",
-    holder: "(resolved from project)",
-    effectiveFrom: "—",
   },
   {
     id: "POS-FIN",

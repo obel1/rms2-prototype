@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { projects } from "../data/projects";
+import { projects, getMember } from "../data/projects";
 import { PageHeader } from "../components/ui";
 import {
   FormSection,
@@ -30,10 +30,10 @@ export default function RAForm() {
   const routing = useMemo(
     () => [
       {
-        positionId: "POS-PI",
+        projectRole: "Principal Researcher",
+        person: getMember(project, "Principal Researcher"),
         action: "Submit application",
         state: "done",
-        note: `Principal Researcher: ${project.pi}`,
       },
       {
         positionId: project.coePositionId,

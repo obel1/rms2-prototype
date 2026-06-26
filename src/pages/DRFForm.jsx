@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { projects, fmtRM } from "../data/projects";
+import { projects, fmtRM, getMember } from "../data/projects";
 import { PageHeader } from "../components/ui";
 import {
   FormSection,
@@ -31,10 +31,10 @@ export default function DRFForm() {
 
     return [
       {
-        positionId: "POS-PI",
+        projectRole: "Principal Researcher",
+        person: getMember(project, "Principal Researcher"),
         action: "Submit request",
         state: "done",
-        note: `Principal Researcher: ${project.pi}`,
       },
       {
         positionId: project.coePositionId,

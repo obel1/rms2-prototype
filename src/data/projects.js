@@ -1,10 +1,23 @@
+// Project roles (Principal Researcher, Co-Researcher, RA, SME, Project Lead)
+// are held PER PROJECT and live on the project's team list — never in the
+// Position Registry. The same person can be PI on one project and
+// Co-Researcher or SME on another. A project has exactly one PI and may have
+// many Co-Researchers, RAs and SMEs.
+
+export const PROJECT_ROLES = [
+  "Principal Researcher",
+  "Co-Researcher",
+  "Research Assistant",
+  "Subject Matter Expert",
+  "Project Lead",
+];
+
 export const projects = [
   {
     id: "ISRA-CRP-25-001",
     title: "Maqasid al-Shariah Index for Sustainable Finance",
     coe: "CASHiEF",
     coePositionId: "POS-COE-DIR-CASHIEF",
-    pi: "Dr Rusni Hassan",
     allocation: 120000,
     disbursed: 84000,
     startDate: "2025-03-01",
@@ -12,13 +25,19 @@ export const projects = [
     status: "on-track",
     utilisation: 70,
     category: "CRP",
+    team: [
+      { person: "Dr Rusni Hassan", role: "Principal Researcher" },
+      { person: "Dr Aishath Muneeza", role: "Co-Researcher" },
+      { person: "Dr Hafas Furqani", role: "Subject Matter Expert" },
+      { person: "Aishah binti Rahmat", role: "Research Assistant" },
+      { person: "Iman Ruzain", role: "Project Lead" },
+    ],
   },
   {
     id: "ISRA-URP-25-014",
     title: "Sukuk Innovation for Climate Adaptation",
     coe: "ISF",
     coePositionId: "POS-COE-DIR-ISF",
-    pi: "Prof Dr Mohamed Eskandar",
     allocation: 80000,
     disbursed: 72000,
     startDate: "2025-01-15",
@@ -26,13 +45,18 @@ export const projects = [
     status: "due-soon",
     utilisation: 90,
     category: "URP",
+    team: [
+      { person: "Prof Dr Mohamed Eskandar", role: "Principal Researcher" },
+      { person: "Dr Hafas Furqani", role: "Co-Researcher" },
+      { person: "Dr Mohamed Aslam", role: "Co-Researcher" },
+      { person: "Nur Izzati binti Hamzah", role: "Research Assistant" },
+    ],
   },
   {
     id: "ISRA-RGP-24-007",
     title: "Waqf-linked Microfinance for B40 Households",
     coe: "i-RISE",
     coePositionId: "POS-COE-DIR-IRISE",
-    pi: "Dr Mohamed Aslam",
     allocation: 65000,
     disbursed: 65000,
     startDate: "2024-10-01",
@@ -40,13 +64,17 @@ export const projects = [
     status: "delayed",
     utilisation: 100,
     category: "RGP",
+    team: [
+      { person: "Dr Mohamed Aslam", role: "Principal Researcher" },
+      { person: "Dr Rusni Hassan", role: "Subject Matter Expert" },
+      { person: "Nur Izzati binti Hamzah", role: "Research Assistant" },
+    ],
   },
   {
     id: "ISRA-CORP-25-003",
     title: "Tokenisation of Shariah-Compliant Assets",
     coe: "CASHiEF",
     coePositionId: "POS-COE-DIR-CASHIEF",
-    pi: "Dr Said Adekunle",
     allocation: 150000,
     disbursed: 28000,
     startDate: "2025-06-01",
@@ -54,13 +82,18 @@ export const projects = [
     status: "on-track",
     utilisation: 19,
     category: "CoRP",
+    team: [
+      { person: "Dr Said Adekunle", role: "Principal Researcher" },
+      { person: "Dr Hafas Furqani", role: "Subject Matter Expert" },
+      { person: "Dr Aishath Muneeza", role: "Co-Researcher" },
+      { person: "Hafiz bin Ahmad", role: "Research Assistant" },
+    ],
   },
   {
     id: "ISRA-IRP-25-021",
     title: "Halal Supply Chain Traceability (Industry)",
     coe: "i-RISE",
     coePositionId: "POS-COE-DIR-IRISE",
-    pi: "Dr Aishath Muneeza",
     allocation: 95000,
     disbursed: 41000,
     startDate: "2025-05-01",
@@ -68,13 +101,17 @@ export const projects = [
     status: "on-track",
     utilisation: 43,
     category: "IRP",
+    team: [
+      { person: "Dr Aishath Muneeza", role: "Principal Researcher" },
+      { person: "Dr Rusni Hassan", role: "Co-Researcher" },
+      { person: "Hafiz bin Ahmad", role: "Research Assistant" },
+    ],
   },
   {
     id: "ISRA-URP-24-031",
     title: "AI Ethics in Islamic Wealth Management",
     coe: "ISF",
     coePositionId: "POS-COE-DIR-ISF",
-    pi: "Dr Hafas Furqani",
     allocation: 55000,
     disbursed: 55000,
     startDate: "2024-08-01",
@@ -82,8 +119,32 @@ export const projects = [
     status: "completed",
     utilisation: 100,
     category: "URP",
+    team: [
+      { person: "Dr Hafas Furqani", role: "Principal Researcher" },
+      { person: "Dr Said Adekunle", role: "Co-Researcher" },
+    ],
   },
 ];
+
+export function getMember(project, role) {
+  return project?.team?.find((t) => t.role === role)?.person;
+}
+
+export function getMembers(project, role) {
+  return (project?.team || []).filter((t) => t.role === role).map((t) => t.person);
+}
+
+// Convenience accessor: project.pi resolves to the current Principal
+// Researcher from the team. Defined as a getter so the team is the single
+// source of truth.
+projects.forEach((p) => {
+  Object.defineProperty(p, "pi", {
+    enumerable: false,
+    get() {
+      return getMember(this, "Principal Researcher") || "—";
+    },
+  });
+});
 
 export const outstandingAdvances = [
   {

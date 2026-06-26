@@ -157,6 +157,43 @@ export default function ProjectDetail() {
 
           <Card>
             <CardHeader
+              title="Project Team"
+              subtitle="Roles held on this project. Project roles are not institutional offices — the same person may hold a different role on another project."
+            />
+            {project.team && project.team.length > 0 ? (
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="bg-surface text-xs uppercase tracking-wider text-navy-500">
+                      <th className="text-left font-medium px-5 py-2.5">
+                        Person
+                      </th>
+                      <th className="text-left font-medium px-5 py-2.5">
+                        Role on this project
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-line">
+                    {project.team.map((m, i) => (
+                      <tr key={i}>
+                        <td className="px-5 py-3 text-navy-900 font-medium">
+                          {m.person}
+                        </td>
+                        <td className="px-5 py-3 text-navy-700">{m.role}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <div className="px-5 py-10 text-sm text-navy-500 text-center">
+                No team members on record.
+              </div>
+            )}
+          </Card>
+
+          <Card>
+            <CardHeader
               title="History of Research Extension"
               subtitle="All requests, current and past."
               action={

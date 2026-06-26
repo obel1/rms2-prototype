@@ -27,15 +27,37 @@ const stepStateStyles = {
   },
 };
 
+// Step shape:
+//   { positionId, action, state, note }           ← institutional (Registry)
+//   { projectRole, person, action, state, note }  ← project team
+//   { label, action, state, note }                ← generic/automatic
+function resolveStep(step) {
+  if (step.positionId) {
+    const p = resolvePosition(step.positionId);
+    return {
+      title: p?.title || step.positionId,
+      holder: p?.holder,
+      source: "Position Registry",
+      sourceTone: "brand",
+    };
+  }
+  if (step.projectRole) {
+    return {
+      title: step.projectRole,
+      holder: step.person || "(no current holder on this project)",
+      source: "Project team — this project only",
+      sourceTone: "neutral",
+    };
+  }
+  return { title: step.label || "—", holder: null, source: null };
+}
+
 function Step({ index, step }) {
   const s = stepStateStyles[step.state || "pending"];
-  const position = step.positionId ? resolvePosition(step.positionId) : null;
+  const r = resolveStep(step);
   return (
     <div
-      className={[
-        "relative pl-9 pr-3 py-3 rounded-lg border",
-        s.border,
-      ].join(" ")}
+      className={["relative pl-9 pr-3 py-3 rounded-lg border", s.border].join(" ")}
     >
       <div
         className={[
@@ -51,11 +73,23 @@ function Step({ index, step }) {
             {step.action}
           </div>
           <div className="text-sm font-semibold text-navy-900 mt-0.5">
-            {position ? position.title : step.label || "—"}
+            {r.title}
           </div>
-          {position && (
+          {r.holder && (
             <div className="text-xs text-navy-500 mt-0.5 truncate">
-              {position.holder}
+              {r.holder}
+            </div>
+          )}
+          {r.source && (
+            <div
+              className={[
+                "inline-block text-[10px] mt-1 px-1.5 py-0.5 rounded border",
+                r.sourceTone === "brand"
+                  ? "border-brand-100 bg-brand-50 text-brand-700"
+                  : "border-navy-200 bg-navy-50 text-navy-700",
+              ].join(" ")}
+            >
+              {r.source}
             </div>
           )}
           {step.note && (
@@ -77,7 +111,7 @@ function Step({ index, step }) {
 
 export default function ApprovalRoutingPanel({
   title = "Approval Routing",
-  subtitle = "Resolved live from the Position Registry",
+  subtitle = "Resolved live from the Position Registry and this project's team",
   steps = [],
   branch,
   footer,

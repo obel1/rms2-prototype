@@ -7,6 +7,9 @@ import ProjectDetail from "./pages/ProjectDetail";
 import DRFForm from "./pages/DRFForm";
 import RAForm from "./pages/RAForm";
 import ExtensionForm from "./pages/ExtensionForm";
+import RegistrationForm from "./pages/RegistrationForm";
+import ProgressReport from "./pages/ProgressReport";
+import CompletionForm from "./pages/CompletionForm";
 import PositionRegistry from "./pages/PositionRegistry";
 import Placeholder from "./pages/Placeholder";
 
@@ -22,45 +25,18 @@ export default function App() {
           <Route path="projects" element={<Projects />} />
           <Route path="projects/:id" element={<ProjectDetail />} />
 
-          <Route path="submit/financial/drf" element={<DRFForm />} />
+          <Route path="submit/registration/new" element={<RegistrationForm />} />
+          <Route path="submit/registration/pif" element={<RegistrationForm />} />
+
           <Route path="submit/research/ra-application" element={<RAForm />} />
           <Route path="submit/research/extension" element={<ExtensionForm />} />
+          <Route path="submit/research/progress" element={<ProgressReport />} />
+          <Route path="submit/research/completion" element={<CompletionForm />} />
 
-          <Route
-            path="submit/registration/*"
-            element={
-              <Placeholder
-                title="Registration Form"
-                screenNumber={3}
-              />
-            }
-          />
-          <Route
-            path="submit/research/completion"
-            element={
-              <Placeholder
-                title="Research Completion"
-                screenNumber={5}
-              />
-            }
-          />
-          <Route
-            path="submit/research/progress"
-            element={
-              <Placeholder
-                title="Progress Report"
-                screenNumber={5}
-              />
-            }
-          />
+          <Route path="submit/financial/drf" element={<DRFForm />} />
           <Route
             path="submit/financial/*"
-            element={
-              <Placeholder
-                title="Financial Form"
-                screenNumber={3}
-              />
-            }
+            element={<Placeholder title="Financial Form" screenNumber={3} />}
           />
 
           <Route path="admin/positions" element={<PositionRegistry />} />

@@ -46,6 +46,11 @@ const letterPresets = {
     subject: "Undertaking by Principal Researcher",
     honorariumLabel: null,
   },
+  SuccessfulCompletionLetter: {
+    title: "Successful Completion Letter",
+    subject: "Successful Completion of Research Project",
+    honorariumLabel: null,
+  },
 };
 
 export default function LetterModal({ open, onClose, letter }) {

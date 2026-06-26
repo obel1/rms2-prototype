@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { projects } from "../data/projects";
+import { projects, getMember } from "../data/projects";
 import { PageHeader } from "../components/ui";
 import {
   FormSection,
@@ -30,10 +30,10 @@ export default function ExtensionForm() {
   const routing = useMemo(() => {
     const steps = [
       {
-        positionId: "POS-PI",
+        projectRole: "Principal Researcher",
+        person: getMember(project, "Principal Researcher"),
         action: "Submit request",
         state: "done",
-        note: `Principal Researcher: ${project.pi}`,
       },
       {
         positionId: "POS-RMC-EXEC",

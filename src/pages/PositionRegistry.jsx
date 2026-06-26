@@ -27,20 +27,24 @@ export default function PositionRegistry() {
     <div>
       <PageHeader
         title="Position Registry"
-        subtitle="Office-holders for every approver position in the system."
+        subtitle="Institutional office-holders only. Project roles (PI, Co-Researcher, RA, SME, Project Lead) are managed on each project."
       />
 
       <div className="px-8 pb-8 space-y-6">
         <div className="border border-brand-100 bg-brand-50/60 rounded-xl px-5 py-4">
           <div className="text-sm font-semibold text-brand-700">
-            Change one row — all future approvals re-route automatically.
+            This registry holds institutional offices only.
           </div>
           <div className="text-xs text-navy-700 mt-1 leading-snug">
-            Every form stores the approver as a position_id (e.g. POS-DIR-RMC),
-            never a named person. The system resolves it to the current holder
-            at runtime, so when an office-holder changes there is nothing else
-            to update. Historical approvals remain correctly attributed to
-            whoever held the post at the time.
+            Each row is a singular post (Director RMC, Director CASHiEF,
+            Director ISF, Director i-RISE, Deputy President Research, Finance
+            Officer, RMC Executive) that resolves to one current holder.
+            Change one row and all future institutional approvals re-route
+            automatically. Project roles — Principal Researcher, Co-Researcher,
+            Research Assistant, SME, Project Lead — are <strong>not</strong>{" "}
+            offices: they are held per-project on each project's team list, so
+            the same person can be PI on one project and Co-Researcher on
+            another.
           </div>
         </div>
 
