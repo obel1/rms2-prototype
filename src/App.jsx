@@ -10,6 +10,10 @@ import ExtensionForm from "./pages/ExtensionForm";
 import RegistrationForm from "./pages/RegistrationForm";
 import ProgressReport from "./pages/ProgressReport";
 import CompletionForm from "./pages/CompletionForm";
+import RAClaimForm from "./pages/RAClaimForm";
+import PaymentClaimForm from "./pages/PaymentClaimForm";
+import TRFForm from "./pages/TRFForm";
+import IERIFClaimForm from "./pages/IERIFClaimForm";
 import PositionRegistry from "./pages/PositionRegistry";
 import Placeholder from "./pages/Placeholder";
 
@@ -25,7 +29,6 @@ export default function App() {
           <Route path="projects" element={<Projects />} />
           <Route path="projects/:id" element={<ProjectDetail />} />
 
-          <Route path="submit/registration/new" element={<RegistrationForm />} />
           <Route path="submit/registration/pif" element={<RegistrationForm />} />
 
           <Route path="submit/research/ra-application" element={<RAForm />} />
@@ -34,9 +37,14 @@ export default function App() {
           <Route path="submit/research/completion" element={<CompletionForm />} />
 
           <Route path="submit/financial/drf" element={<DRFForm />} />
+          <Route path="submit/financial/ra-claim" element={<RAClaimForm />} />
+          <Route path="submit/financial/claim" element={<PaymentClaimForm />} />
+          <Route path="submit/financial/trf" element={<TRFForm />} />
+          <Route path="submit/financial/ierif" element={<IERIFClaimForm />} />
+
           <Route
-            path="submit/financial/*"
-            element={<Placeholder title="Financial Form" screenNumber={3} />}
+            path="submit/*"
+            element={<Placeholder title="Form" screenNumber={3} />}
           />
 
           <Route path="admin/positions" element={<PositionRegistry />} />

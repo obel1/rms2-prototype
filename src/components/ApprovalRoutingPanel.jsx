@@ -25,12 +25,21 @@ const stepStateStyles = {
     label: "Automatic",
     labelCls: "text-navy-700",
   },
+  // External = outside the in-system approval chain. Used for Finance-side
+  // signature/payment blocks that happen after the system produces an
+  // approved form. Rendered with dashed border and muted styling.
+  external: {
+    dot: "bg-white border border-dashed border-navy-300 text-navy-500",
+    border: "border-dashed border-navy-200 bg-surface",
+    label: "Outside system",
+    labelCls: "text-navy-500 italic",
+  },
 };
 
 // Step shape:
 //   { positionId, action, state, note }           ← institutional (Registry)
 //   { projectRole, person, action, state, note }  ← project team
-//   { label, action, state, note }                ← generic/automatic
+//   { label, action, state, note }                ← generic / automatic / external
 function resolveStep(step) {
   if (step.positionId) {
     const p = resolvePosition(step.positionId);
@@ -55,6 +64,7 @@ function resolveStep(step) {
 function Step({ index, step }) {
   const s = stepStateStyles[step.state || "pending"];
   const r = resolveStep(step);
+  const isExternal = step.state === "external";
   return (
     <div
       className={["relative pl-9 pr-3 py-3 rounded-lg border", s.border].join(" ")}
@@ -65,14 +75,25 @@ function Step({ index, step }) {
           s.dot,
         ].join(" ")}
       >
-        {step.state === "done" ? "✓" : step.state === "auto" ? "⚙" : index}
+        {step.state === "done"
+          ? "✓"
+          : step.state === "auto"
+            ? "⚙"
+            : step.state === "external"
+              ? "⇢"
+              : index}
       </div>
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <div className="text-[11px] uppercase tracking-wider text-navy-500">
             {step.action}
           </div>
-          <div className="text-sm font-semibold text-navy-900 mt-0.5">
+          <div
+            className={[
+              "text-sm font-semibold mt-0.5",
+              isExternal ? "text-navy-700" : "text-navy-900",
+            ].join(" ")}
+          >
             {r.title}
           </div>
           {r.holder && (
@@ -80,7 +101,7 @@ function Step({ index, step }) {
               {r.holder}
             </div>
           )}
-          {r.source && (
+          {r.source && !isExternal && (
             <div
               className={[
                 "inline-block text-[10px] mt-1 px-1.5 py-0.5 rounded border",
@@ -93,7 +114,9 @@ function Step({ index, step }) {
             </div>
           )}
           {step.note && (
-            <div className="text-[11px] text-navy-500 mt-1">{step.note}</div>
+            <div className="text-[11px] text-navy-500 mt-1 leading-snug">
+              {step.note}
+            </div>
           )}
         </div>
         <span
@@ -109,12 +132,23 @@ function Step({ index, step }) {
   );
 }
 
+function StepsList({ steps, startIndex = 1 }) {
+  return (
+    <div className="p-4 space-y-2">
+      {steps.map((step, i) => (
+        <Step key={i} index={startIndex + i} step={step} />
+      ))}
+    </div>
+  );
+}
+
 export default function ApprovalRoutingPanel({
   title = "Approval Routing",
   subtitle = "Resolved live from the Position Registry and this project's team",
   steps = [],
   branch,
   footer,
+  handoff,
 }) {
   return (
     <aside className="bg-white border border-line rounded-xl shadow-[0_1px_2px_rgba(15,23,42,0.04)] lg:sticky lg:top-4">
@@ -128,11 +162,7 @@ export default function ApprovalRoutingPanel({
         <div className="text-xs text-navy-500 mt-1">{subtitle}</div>
       </div>
 
-      <div className="p-4 space-y-2">
-        {steps.map((step, i) => (
-          <Step key={i} index={i + 1} step={step} />
-        ))}
-      </div>
+      <StepsList steps={steps} />
 
       {branch && (
         <div className="mx-4 mb-4 p-3 rounded-lg border border-yellow-200 bg-yellow-50">
@@ -142,6 +172,28 @@ export default function ApprovalRoutingPanel({
           <div className="text-xs text-navy-700 mt-1 whitespace-pre-line leading-relaxed">
             {branch}
           </div>
+        </div>
+      )}
+
+      {handoff && (
+        <div className="border-t border-dashed border-line">
+          <div className="px-5 pt-4 pb-1">
+            <div className="text-[10px] uppercase tracking-wider text-navy-500 font-semibold">
+              After approval — Finance hand-off
+            </div>
+            <div className="text-sm font-semibold text-navy-900 mt-0.5">
+              {handoff.title || "Finance hand-off — method to be decided"}
+            </div>
+            {handoff.note && (
+              <div className="text-xs text-navy-500 mt-1 leading-snug">
+                {handoff.note}
+              </div>
+            )}
+          </div>
+          <StepsList
+            steps={handoff.steps || []}
+            startIndex={(steps.length || 0) + 1}
+          />
         </div>
       )}
 

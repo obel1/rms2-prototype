@@ -1,5 +1,4 @@
 import { useMemo, useState } from "react";
-import { useLocation } from "react-router-dom";
 import { PageHeader } from "../components/ui";
 import {
   FormSection,
@@ -22,11 +21,8 @@ const coes = [
 const categories = ["URP", "RGP", "CRP", "CoRP", "IRP"];
 
 export default function RegistrationForm() {
-  const { pathname } = useLocation();
-  const isPIF = pathname.endsWith("/pif");
-
   const [title, setTitle] = useState(
-    isPIF ? "Maqasid Indexing of Sustainability-Linked Sukuk" : ""
+    "Maqasid Indexing of Sustainability-Linked Sukuk"
   );
   const [coe, setCoe] = useState("CASHiEF");
   const [category, setCategory] = useState("URP");
@@ -84,14 +80,8 @@ export default function RegistrationForm() {
   return (
     <div>
       <PageHeader
-        title={
-          isPIF ? "Project Identification Form" : "New Project Registration"
-        }
-        subtitle={
-          isPIF
-            ? "Pre-registration intake — capture the proposed project before submitting for full registration."
-            : "Register a new research project with RMC."
-        }
+        title="Project Identification Form"
+        subtitle="Project intake — capture the proposed project for RMC registration."
         actions={
           <div className="flex gap-2">
             <button
@@ -225,11 +215,7 @@ export default function RegistrationForm() {
 
         <div className="lg:col-span-1">
           <ApprovalRoutingPanel
-            title={
-              isPIF
-                ? "Approval Routing — PIF"
-                : "Approval Routing — Project Registration"
-            }
+            title="Approval Routing — PIF"
             subtitle="Institutional steps resolve via the Position Registry. The PI resolves from this registration's team."
             steps={routing}
             footer="On approval, the Registration Letter and Letter of Undertaking are auto-generated from the shared letter engine."

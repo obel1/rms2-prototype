@@ -12,6 +12,7 @@ import {
   SubmitBar,
 } from "../components/Form";
 import ApprovalRoutingPanel from "../components/ApprovalRoutingPanel";
+import FinanceNote, { financeHandoff } from "../components/FinanceNote";
 
 export default function DRFForm() {
   const [projectId, setProjectId] = useState(projects[0].id);
@@ -42,19 +43,8 @@ export default function DRFForm() {
         state: "done",
       },
       {
-        positionId: "POS-FIN",
-        action: "Verify funds & documentation",
-        state: "current",
-      },
-      {
         ...finalApprover,
-        state: "pending",
-      },
-      {
-        action: "Update Control Sheet",
-        label: "Control Sheet (auto)",
-        note: "Allocation, disbursed, balance and utilisation % updated automatically.",
-        state: "auto",
+        state: "current",
       },
     ];
   }, [amount, project]);
@@ -170,6 +160,8 @@ export default function DRFForm() {
             </Row>
           </FormSection>
 
+          <FinanceNote />
+
           <SubmitBar />
         </div>
 
@@ -177,10 +169,11 @@ export default function DRFForm() {
         <div className="lg:col-span-1">
           <ApprovalRoutingPanel
             title="Approval Routing — DRF"
-            subtitle="Each step is a POSITION. The current holder is resolved live from the Position Registry."
+            subtitle="Institutional steps resolve via the Position Registry; the PI resolves from this project's team."
             steps={routing}
             branch={`Routing is amount-based:\n• ≤ RM10,000 → Director RMC\n• RM10,000–50,000 → Deputy President Research\n• > RM50,000 → blocked (exceeds per-project cap)`}
-            footer="Approving updates the Control Sheet (allocation / disbursed / balance / utilisation %) automatically."
+            handoff={financeHandoff()}
+            footer="The system produces an approved DRF on final approval. Delivery to Finance — and any resulting Control Sheet update — happens outside the in-system chain."
           />
         </div>
       </div>

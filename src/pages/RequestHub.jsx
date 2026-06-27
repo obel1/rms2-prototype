@@ -6,7 +6,6 @@ import { Card, PageHeader, StatusPill } from "../components/ui";
 const menus = {
   Registration: [
     { label: "Project Identification Form", to: "/submit/registration/pif" },
-    { label: "New Project Registration", to: "/submit/registration/new" },
   ],
   Research: [
     { label: "RA Application", to: "/submit/research/ra-application" },
@@ -18,8 +17,7 @@ const menus = {
     { label: "Disbursement Request (DRF)", to: "/submit/financial/drf" },
     { label: "Travel Requisition (TRF)", to: "/submit/financial/trf" },
     { label: "Payment Claim", to: "/submit/financial/claim" },
-    { label: "RA Claim", to: "/submit/financial/ra-claim" },
-    { label: "RA Timesheet", to: "/submit/financial/timesheet" },
+    { label: "RA Claim (incl. timesheet)", to: "/submit/financial/ra-claim" },
     { label: "IERIF Claim", to: "/submit/financial/ierif" },
   ],
 };
