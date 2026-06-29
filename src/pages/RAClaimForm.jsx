@@ -13,6 +13,7 @@ import {
 } from "../components/Form";
 import ApprovalRoutingPanel from "../components/ApprovalRoutingPanel";
 import FinanceNote, { financeHandoff } from "../components/FinanceNote";
+import AuditLog from "../components/AuditLog";
 
 function blankTimesheetRow() {
   return { date: "", task: "", timeSpent: "", hours: 0 };
@@ -394,6 +395,8 @@ export default function RAClaimForm() {
           <FinanceNote />
 
           <SubmitBar />
+
+          <AuditLog requestKey={`RAClaim/${project.id}`} />
         </div>
 
         <div className="lg:col-span-1">
@@ -402,6 +405,7 @@ export default function RAClaimForm() {
             subtitle="In-system chain ends with Director RMC. Finance-side payment steps sit outside the system."
             steps={routing}
             handoff={financeHandoff({ withFinanceSignatures: true })}
+            requestKey={`RAClaim/${project.id}`}
             footer="Received By / Verified By are Finance Department steps performed after the system has produced the approved form."
           />
         </div>

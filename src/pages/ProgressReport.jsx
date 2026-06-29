@@ -12,6 +12,7 @@ import {
   SubmitBar,
 } from "../components/Form";
 import ApprovalRoutingPanel from "../components/ApprovalRoutingPanel";
+import AuditLog from "../components/AuditLog";
 
 const milestoneStates = [
   { value: "on-track", label: "On Track", tone: "bg-success" },
@@ -223,6 +224,8 @@ export default function ProgressReport() {
           </FormSection>
 
           <SubmitBar />
+
+          <AuditLog requestKey={`ProgressReport/${project.id}`} />
         </div>
 
         <div className="lg:col-span-1">
@@ -230,6 +233,7 @@ export default function ProgressReport() {
             title="Approval Routing — Progress Report"
             subtitle="The PI resolves from this project's team. RMC Executive resolves via the Position Registry."
             steps={routing}
+            requestKey={`ProgressReport/${project.id}`}
             footer="No formal approval gate — once reviewed, the progress feeds into the project's monitoring status and dashboard."
           />
         </div>

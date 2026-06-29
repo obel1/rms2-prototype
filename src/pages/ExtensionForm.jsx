@@ -12,6 +12,7 @@ import {
   SubmitBar,
 } from "../components/Form";
 import ApprovalRoutingPanel from "../components/ApprovalRoutingPanel";
+import AuditLog from "../components/AuditLog";
 
 export default function ExtensionForm() {
   const [projectId, setProjectId] = useState(projects[0].id);
@@ -155,13 +156,16 @@ export default function ExtensionForm() {
           </FormSection>
 
           <SubmitBar />
+
+          <AuditLog requestKey={`Extension/${project.id}`} />
         </div>
 
         <div className="lg:col-span-1">
           <ApprovalRoutingPanel
             title="Approval Routing — Extension"
-            subtitle="Each step is a POSITION. The current holder is resolved live from the Position Registry."
+            subtitle="Institutional steps via Position Registry; the PI resolves from this project's team."
             steps={routing}
+            requestKey={`Extension/${project.id}`}
             branch={
               isSubsequentSensitive
                 ? `This is a subsequent extension on a ${project.category} project — final approval escalates from Director RMC to the Research Working Committee.`

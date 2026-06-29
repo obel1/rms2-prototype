@@ -13,6 +13,7 @@ import {
 } from "../components/Form";
 import ApprovalRoutingPanel from "../components/ApprovalRoutingPanel";
 import LetterModal from "../components/LetterModal";
+import AuditLog from "../components/AuditLog";
 
 const checklistSeed = [
   {
@@ -266,6 +267,8 @@ export default function CompletionForm() {
           </FormSection>
 
           <SubmitBar />
+
+          <AuditLog requestKey={`Completion/${project.id}`} />
         </div>
 
         <div className="lg:col-span-1">
@@ -273,6 +276,7 @@ export default function CompletionForm() {
             title="Approval Routing — Completion"
             subtitle="Institutional steps resolve via the Position Registry. Project-role steps (PI, Project Lead) resolve from this project's team."
             steps={routing}
+            requestKey={`Completion/${project.id}`}
             footer={
               canIssueLetter
                 ? "Checklist is at 100%. On Director RMC verification the Successful Completion Letter is auto-generated."

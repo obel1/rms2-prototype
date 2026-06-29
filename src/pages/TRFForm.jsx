@@ -13,6 +13,7 @@ import {
 } from "../components/Form";
 import ApprovalRoutingPanel from "../components/ApprovalRoutingPanel";
 import FinanceNote, { financeHandoff } from "../components/FinanceNote";
+import AuditLog from "../components/AuditLog";
 
 export default function TRFForm() {
   const [projectId, setProjectId] = useState(projects[0].id);
@@ -189,6 +190,8 @@ export default function TRFForm() {
           <FinanceNote />
 
           <SubmitBar />
+
+          <AuditLog requestKey={`TRF/${project.id}`} />
         </div>
 
         <div className="lg:col-span-1">
@@ -197,6 +200,7 @@ export default function TRFForm() {
             subtitle="No in-system approver beyond the applicant — the approved TRF is then forwarded to Finance."
             steps={routing}
             handoff={financeHandoff()}
+            requestKey={`TRF/${project.id}`}
             footer="The TRF prints with the applicant's signature. Delivery of the approved form to Finance is undecided."
           />
         </div>

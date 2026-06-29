@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useRole } from "../state/RoleContext";
 
 const sectionItems = {
   Registration: [
@@ -28,9 +29,7 @@ function NavItem({ to, children, icon, onNavigate }) {
       className={({ isActive }) =>
         [
           "flex items-center gap-3 px-3 py-2 rounded-md text-sm",
-          isActive
-            ? "bg-brand-600 text-white"
-            : "text-navy-100 hover:bg-navy-700",
+          isActive ? "bg-brand-600 text-white" : "text-navy-100 hover:bg-navy-700",
         ].join(" ")
       }
       end
@@ -78,9 +77,16 @@ function Disclosure({ title, items, defaultOpen = false, onNavigate }) {
 }
 
 export default function Sidebar({ open = false, onClose }) {
+  const { can, persona, role } = useRole();
+  const s = can.sidebar;
+
+  const showSubmit = s.submit;
+  const showAnyAdmin = s.positionRegistry;
+  const showAnyOversight =
+    s.requests || s.approvals || s.financeHandoff || s.controlSheet;
+
   return (
     <>
-      {/* Backdrop — mobile only */}
       <div
         onClick={onClose}
         className={[
@@ -93,10 +99,8 @@ export default function Sidebar({ open = false, onClose }) {
       <aside
         className={[
           "w-64 shrink-0 bg-navy-800 text-white flex flex-col",
-          // Mobile: fixed slide-in drawer
           "fixed inset-y-0 left-0 z-40 transition-transform duration-200",
           open ? "translate-x-0" : "-translate-x-full",
-          // Desktop: static column, always visible
           "lg:static lg:translate-x-0 lg:z-auto lg:h-full",
         ].join(" ")}
       >
@@ -119,54 +123,105 @@ export default function Sidebar({ open = false, onClose }) {
         </div>
 
         <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-1">
-          <NavItem to="/" icon="●" onNavigate={onClose}>
-            Dashboard
-          </NavItem>
-          <NavItem to="/requests" icon="◉" onNavigate={onClose}>
-            Request Submission
-          </NavItem>
-          <NavItem to="/projects" icon="◧" onNavigate={onClose}>
-            Projects
-          </NavItem>
-
-          <div className="pt-4">
-            <div className="px-3 pb-1 text-[10px] uppercase tracking-wider text-navy-200">
-              Submit a request
-            </div>
-            <div className="space-y-1">
-              <Disclosure
-                title="Registration"
-                items={sectionItems.Registration}
-                onNavigate={onClose}
-              />
-              <Disclosure
-                title="Research"
-                items={sectionItems.Research}
-                defaultOpen
-                onNavigate={onClose}
-              />
-              <Disclosure
-                title="Financial"
-                items={sectionItems.Financial}
-                onNavigate={onClose}
-              />
-            </div>
-          </div>
-
-          <div className="pt-4">
-            <div className="px-3 pb-1 text-[10px] uppercase tracking-wider text-navy-200">
-              Administration
-            </div>
-            <NavItem to="/admin/positions" icon="⚙" onNavigate={onClose}>
-              Position Registry
+          {s.dashboard && (
+            <NavItem to="/" icon="●" onNavigate={onClose}>
+              Dashboard
             </NavItem>
-          </div>
+          )}
+
+          {showAnyOversight && (
+            <div className="pt-2">
+              <div className="px-3 pb-1 text-[10px] uppercase tracking-wider text-navy-200">
+                Workflow
+              </div>
+              {s.requests && (
+                <NavItem to="/requests" icon="◉" onNavigate={onClose}>
+                  Request Submission
+                </NavItem>
+              )}
+              {s.approvals && (
+                <NavItem to="/approvals" icon="✓" onNavigate={onClose}>
+                  Approvals Inbox
+                </NavItem>
+              )}
+              {s.financeHandoff && (
+                <NavItem to="/finance/handoff" icon="₪" onNavigate={onClose}>
+                  Finance Hand-off
+                </NavItem>
+              )}
+              {s.controlSheet && (
+                <NavItem to="/finance/control-sheet" icon="≣" onNavigate={onClose}>
+                  Control Sheet
+                </NavItem>
+              )}
+            </div>
+          )}
+
+          {(s.projects || s.myProjects) && (
+            <div className="pt-2">
+              <div className="px-3 pb-1 text-[10px] uppercase tracking-wider text-navy-200">
+                Projects
+              </div>
+              <NavItem to="/projects" icon="◧" onNavigate={onClose}>
+                {s.myProjects ? "My Projects" : "Projects"}
+              </NavItem>
+              {s.myLetters && (
+                <NavItem to="/my-letters" icon="✉" onNavigate={onClose}>
+                  My Letters
+                </NavItem>
+              )}
+            </div>
+          )}
+
+          {showSubmit && (
+            <div className="pt-4">
+              <div className="px-3 pb-1 text-[10px] uppercase tracking-wider text-navy-200">
+                Submit a request
+              </div>
+              <div className="space-y-1">
+                <Disclosure
+                  title="Registration"
+                  items={sectionItems.Registration}
+                  onNavigate={onClose}
+                />
+                <Disclosure
+                  title="Research"
+                  items={sectionItems.Research}
+                  defaultOpen
+                  onNavigate={onClose}
+                />
+                <Disclosure
+                  title="Financial"
+                  items={sectionItems.Financial}
+                  onNavigate={onClose}
+                />
+              </div>
+            </div>
+          )}
+
+          {showAnyAdmin && (
+            <div className="pt-4">
+              <div className="px-3 pb-1 text-[10px] uppercase tracking-wider text-navy-200">
+                Administration
+              </div>
+              <NavItem to="/admin/positions" icon="⚙" onNavigate={onClose}>
+                Position Registry
+              </NavItem>
+            </div>
+          )}
         </nav>
 
         <div className="px-5 py-4 border-t border-navy-700 text-xs text-navy-200">
-          Signed in as
-          <div className="text-white text-sm font-medium">Iman Ruzain</div>
-          <div className="text-[11px]">RMC Executive</div>
+          <div className="text-[10px] uppercase tracking-wider text-navy-300">
+            Viewing as
+          </div>
+          <div className="text-white text-sm font-medium mt-0.5">
+            {persona.name}
+          </div>
+          <div className="text-[11px]">{persona.title}</div>
+          <div className="text-[10px] text-navy-300 mt-1">
+            Role: {role.label}
+          </div>
         </div>
       </aside>
     </>

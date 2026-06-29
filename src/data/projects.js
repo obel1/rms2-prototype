@@ -176,6 +176,9 @@ export const outstandingAdvances = [
   },
 ];
 
+// `awaiting` indicates whose turn it currently is in the in-system chain.
+// `handoffStatus` only applies to approved Financial requests pending delivery
+// to Finance (the Finance hand-off queue).
 export const submittedRequests = [
   {
     id: "REQ-2026-0142",
@@ -184,6 +187,7 @@ export const submittedRequests = [
     module: "Financial",
     submittedDate: "2026-06-21",
     status: "In Review",
+    awaiting: { positionId: "POS-DIR-RMC" },
   },
   {
     id: "REQ-2026-0141",
@@ -192,6 +196,8 @@ export const submittedRequests = [
     module: "Research",
     submittedDate: "2026-06-19",
     status: "Approved",
+    awaiting: null,
+    approvedDate: "2026-06-23",
   },
   {
     id: "REQ-2026-0140",
@@ -200,6 +206,7 @@ export const submittedRequests = [
     module: "Research",
     submittedDate: "2026-06-18",
     status: "In Review",
+    awaiting: { positionId: "POS-COE-DIR-IRISE" },
   },
   {
     id: "REQ-2026-0139",
@@ -208,6 +215,7 @@ export const submittedRequests = [
     module: "Financial",
     submittedDate: "2026-06-15",
     status: "Draft",
+    awaiting: null,
   },
   {
     id: "REQ-2026-0138",
@@ -216,6 +224,7 @@ export const submittedRequests = [
     module: "Research",
     submittedDate: "2026-06-12",
     status: "Completed",
+    awaiting: null,
   },
   {
     id: "REQ-2026-0137",
@@ -224,6 +233,60 @@ export const submittedRequests = [
     module: "Financial",
     submittedDate: "2026-06-10",
     status: "Rejected",
+    awaiting: null,
+  },
+  // Additional in-flight requests for richer role inboxes
+  {
+    id: "REQ-2026-0143",
+    projectId: "ISRA-IRP-25-021",
+    documentType: "RA Claim",
+    module: "Financial",
+    submittedDate: "2026-06-24",
+    status: "In Review",
+    awaiting: { positionId: "POS-COE-DIR-IRISE" },
+  },
+  {
+    id: "REQ-2026-0144",
+    projectId: "ISRA-CRP-25-001",
+    documentType: "Payment Claim",
+    module: "Financial",
+    submittedDate: "2026-06-24",
+    status: "In Review",
+    awaiting: { positionId: "POS-DIR-RMC" },
+  },
+  {
+    id: "REQ-2026-0145",
+    projectId: "ISRA-CRP-25-001",
+    documentType: "RA Claim",
+    module: "Financial",
+    submittedDate: "2026-06-15",
+    status: "Approved",
+    awaiting: null,
+    approvedDate: "2026-06-26",
+    handoffStatus: "pending-delivery",
+  },
+  {
+    id: "REQ-2026-0146",
+    projectId: "ISRA-CORP-25-003",
+    documentType: "Disbursement Request",
+    module: "Financial",
+    submittedDate: "2026-06-16",
+    status: "Approved",
+    awaiting: null,
+    approvedDate: "2026-06-25",
+    handoffStatus: "pending-delivery",
+  },
+  {
+    id: "REQ-2026-0147",
+    projectId: "ISRA-URP-25-014",
+    documentType: "Payment Claim",
+    module: "Financial",
+    submittedDate: "2026-06-14",
+    status: "Approved",
+    awaiting: null,
+    approvedDate: "2026-06-22",
+    handoffStatus: "delivered",
+    deliveredDate: "2026-06-23",
   },
 ];
 

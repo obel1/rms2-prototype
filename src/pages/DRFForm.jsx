@@ -13,6 +13,7 @@ import {
 } from "../components/Form";
 import ApprovalRoutingPanel from "../components/ApprovalRoutingPanel";
 import FinanceNote, { financeHandoff } from "../components/FinanceNote";
+import AuditLog from "../components/AuditLog";
 
 export default function DRFForm() {
   const [projectId, setProjectId] = useState(projects[0].id);
@@ -163,6 +164,8 @@ export default function DRFForm() {
           <FinanceNote />
 
           <SubmitBar />
+
+          <AuditLog requestKey={`DRF/${project.id}`} />
         </div>
 
         {/* Approval routing panel */}
@@ -173,6 +176,7 @@ export default function DRFForm() {
             steps={routing}
             branch={`Routing is amount-based:\n• ≤ RM10,000 → Director RMC\n• RM10,000–50,000 → Deputy President Research\n• > RM50,000 → blocked (exceeds per-project cap)`}
             handoff={financeHandoff()}
+            requestKey={`DRF/${project.id}`}
             footer="The system produces an approved DRF on final approval. Delivery to Finance — and any resulting Control Sheet update — happens outside the in-system chain."
           />
         </div>

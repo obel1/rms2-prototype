@@ -1,13 +1,36 @@
 import { Link } from "react-router-dom";
-import { projects, fmtRM } from "../data/projects";
+import { projects as allProjects, fmtRM } from "../data/projects";
 import { Card, PageHeader, StatusPill, ProgressBar } from "../components/ui";
+import { useRole } from "../state/RoleContext";
 
 export default function Projects() {
+  const { role, persona } = useRole();
+
+  const projects = (() => {
+    if (role.id === "researcher") {
+      return allProjects.filter((p) =>
+        (p.team || []).some((t) => t.person === persona.name)
+      );
+    }
+    if (role.id === "coe-director") {
+      return allProjects.filter((p) => p.coe === persona.coe);
+    }
+    return allProjects;
+  })();
+
+  const title = role.id === "researcher" ? "My Projects" : "Projects";
+  const subtitle =
+    role.id === "researcher"
+      ? "Projects where you hold a role."
+      : role.id === "coe-director"
+        ? `Projects under ${persona.coe}.`
+        : "All research projects under RMC. Click any row to open the project detail.";
+
   return (
     <div>
       <PageHeader
-        title="Projects"
-        subtitle="All research projects under RMC. Click any row to open the project detail."
+        title={title}
+        subtitle={subtitle}
         actions={
           <button className="text-sm px-3 py-2 rounded-md border border-line bg-white hover:bg-surface-2 text-navy-700">
             Export

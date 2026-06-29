@@ -13,6 +13,7 @@ import {
 } from "../components/Form";
 import ApprovalRoutingPanel from "../components/ApprovalRoutingPanel";
 import FinanceNote, { financeHandoff } from "../components/FinanceNote";
+import AuditLog from "../components/AuditLog";
 
 const expenseCategories = [
   "Travel & accommodation",
@@ -225,6 +226,8 @@ export default function IERIFClaimForm() {
           <FinanceNote />
 
           <SubmitBar />
+
+          <AuditLog requestKey={`IERIFClaim/${project.id}`} />
         </div>
 
         <div className="lg:col-span-1">
@@ -233,6 +236,7 @@ export default function IERIFClaimForm() {
             subtitle="The claimant resolves from the project team; the approver via the Position Registry."
             steps={routing}
             handoff={financeHandoff()}
+            requestKey={`IERIFClaim/${project.id}`}
             footer="On Director RMC approval the system produces an approved IERIF claim form. Delivery to Finance is undecided."
           />
         </div>

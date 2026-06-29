@@ -13,6 +13,7 @@ import {
 } from "../components/Form";
 import ApprovalRoutingPanel from "../components/ApprovalRoutingPanel";
 import LetterModal from "../components/LetterModal";
+import AuditLog from "../components/AuditLog";
 
 export default function RAForm() {
   const [projectId, setProjectId] = useState(projects[0].id);
@@ -157,13 +158,16 @@ export default function RAForm() {
           </FormSection>
 
           <SubmitBar />
+
+          <AuditLog requestKey={`RAApplication/${project.id}`} />
         </div>
 
         <div className="lg:col-span-1">
           <ApprovalRoutingPanel
             title="Approval Routing — RA Application"
-            subtitle="Each step is a POSITION. The current holder is resolved live from the Position Registry."
+            subtitle="Institutional steps via Position Registry; the PI resolves from this project's team."
             steps={routing}
+            requestKey={`RAApplication/${project.id}`}
             footer="On final approval the Letter of Award (LOA-RA) is auto-generated and sent to the RA — no signature required."
           />
         </div>

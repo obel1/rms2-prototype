@@ -13,6 +13,7 @@ import {
 } from "../components/Form";
 import ApprovalRoutingPanel from "../components/ApprovalRoutingPanel";
 import FinanceNote, { financeHandoff } from "../components/FinanceNote";
+import AuditLog from "../components/AuditLog";
 
 const claimantTypes = [
   { value: "Writer", honorarium: 3000 },
@@ -194,6 +195,8 @@ export default function PaymentClaimForm() {
           <FinanceNote />
 
           <SubmitBar />
+
+          <AuditLog requestKey={`PaymentClaim/${project.id}`} />
         </div>
 
         <div className="lg:col-span-1">
@@ -202,6 +205,7 @@ export default function PaymentClaimForm() {
             subtitle="In-system chain ends with Director RMC. Finance-side signature blocks are shown separately."
             steps={routing}
             handoff={financeHandoff({ withFinanceSignatures: true })}
+            requestKey={`PaymentClaim/${project.id}`}
             footer="The form's 'Received By' (Finance Manager) and 'Verified By' (Finance Director) are completed by Finance after the system has produced the approved form."
           />
         </div>

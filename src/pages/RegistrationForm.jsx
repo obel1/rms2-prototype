@@ -11,6 +11,7 @@ import {
 } from "../components/Form";
 import ApprovalRoutingPanel from "../components/ApprovalRoutingPanel";
 import LetterModal from "../components/LetterModal";
+import AuditLog from "../components/AuditLog";
 
 const coes = [
   { value: "CASHiEF", positionId: "POS-COE-DIR-CASHIEF" },
@@ -211,6 +212,8 @@ export default function RegistrationForm() {
           </FormSection>
 
           <SubmitBar />
+
+          <AuditLog requestKey="PIF/new-project" />
         </div>
 
         <div className="lg:col-span-1">
@@ -218,6 +221,7 @@ export default function RegistrationForm() {
             title="Approval Routing — PIF"
             subtitle="Institutional steps resolve via the Position Registry. The PI resolves from this registration's team."
             steps={routing}
+            requestKey="PIF/new-project"
             footer="On approval, the Registration Letter and Letter of Undertaking are auto-generated from the shared letter engine."
           />
         </div>
